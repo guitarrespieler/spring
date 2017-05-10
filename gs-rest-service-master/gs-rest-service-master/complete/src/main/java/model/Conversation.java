@@ -3,6 +3,7 @@ package model;
 import java.math.BigInteger;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ public class Conversation {
 	
 	@Id
 	@GeneratedValue( strategy = GenerationType.SEQUENCE)
+	@Column(name="conversationId", nullable=false, unique=true)
 	private BigInteger conversationId;
 	
 	@ManyToMany
@@ -22,6 +24,8 @@ public class Conversation {
 	
 	@OneToMany
 	private List<Message> messages;
+	
+	public Conversation(){}
 
 	public BigInteger getConversationId() {
 		return conversationId;

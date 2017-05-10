@@ -1,11 +1,13 @@
 package model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,28 +28,40 @@ public class User {
 	
 	@Id
 	@GeneratedValue( strategy = GenerationType.SEQUENCE)
+	@Column(name="userId", nullable=false, unique=true)
 	private long id;
 	
+	@Column(name="firstname", nullable=false)
 	private String firstName;
 	
+	@Column(name="lastname", nullable=false)
 	private String lastName;
 	
 	@NaturalId
+	@Column(name="email", nullable=false, unique=true)
 	private String email;
 	
+	@Column(name="password", nullable=false)
 	private String password;
 	
+	@Column(name="placeofBirth",nullable=false)
 	private String placeOfBirth;
 	
+	@Column(name="birthDate", nullable=false)
 	private Date birthDate;
 	
-	@ManyToMany
+	@Column(name="role", nullable=false)
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<User> friends;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Conversation> conversations;
 
-	private Role role;
+	
+	public User(){}
 
 	public long getId() {
 		return id;
